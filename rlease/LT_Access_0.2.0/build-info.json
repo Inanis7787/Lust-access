@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "engine": "Ren'Py 8.1.3.23091805",
+  "format": "Ren'Py bytecode (.rpyc)",
+  "files": {
+    "lt_access.rpyc": "1db7589acb40f187d70eb1754321f0f113d604bf76f4eadb019233284c1d5ae6",
+    "lt_access_menu.rpyc": "424c4ce72d15f2d979d536e7a81de15d78fc99ec90e4c73b189e30cf88e1a45d",
+    "install_access.py": "e209e82626b552291e7342b448231df380b3819ea5ec1ccdd3b97a98a3a746bc",
+    "Install.cmd": "3c88b7d7c90cf4277e6fb9ce58a304e87dbd567a96d02079a9ad0d296d691a98",
+    "Uninstall.cmd": "b78834c2be7a70e9eafe5166dbb17b454a90dd26f0354a786501d6711ba9559d",
+    "README.md": "4574e9ea2d9fdeb992412979bee487e39df43f3620a2cf35bfd6639f6adbb256",
+    "LICENSE.txt": "9e68f0261a891df4368344e4c9b5fec2c3509fd6da3cadf5c4c05192589805a5"
+  }
+}

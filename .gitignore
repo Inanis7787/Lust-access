@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+*.rpyc
+!rlease/**/*.rpyc
+.build-*/
+*.rpa
+saves/
+cache/
+log.txt
+traceback.txt
+errors.txt
