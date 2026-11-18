@@ -26,7 +26,7 @@ def main():
     spec.loader.exec_module(installer)
     version = installer.VERSION
     scripts = ('lt_access.rpy', 'lt_access_menu.rpy')
-    release = repo/'rlease'/('LT_Access_'+version)
+    release = repo/'release'/('LT_Access_'+version)
     release.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.build-', dir=source) as temporary:
         staging = Path(temporary).resolve()

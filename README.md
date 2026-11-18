@@ -1,99 +1,184 @@
 # Lust Access
 
-NVDA accessibility mod for the GOG version of **Lust Theory — Season 1**, tested with Ren'Py 8.1.3.23091805 on 64-bit Windows.
+**An accessibility mod for Lust Theory — Season 1.**
 
-Version **0.2.0** adds an accessible Relationship Changer and reorganizes spoken menu navigation. This is a work in progress: a full playthrough of every route and bonus scene has **not** been verified.
+Lust Access makes *Lust Theory — Season 1* more accessible to blind and visually impaired players using NVDA on Windows. It adds spoken menus, keyboard navigation, dialogue handling, and accessible controls for timed choices.
 
-## Folders
+**Tested with:**
+- Ren'Py 8.1.3.23091805
+- Windows 64-bit
+- NVDA
 
-- `src/`: mod source, installer, release builder, and automated tests.
-- `rlease/`: compiled `.rpyc` files, installer bundle, ZIP, and checksums. The folder spelling follows the requested layout.
+## A note about the code
 
-Only the mod's original code is distributed. The installer generates UI overrides from the user's own game archive. Game assets, story scripts, screen-reader DLLs, and saves are not included.
+Full disclosure ,I did not write  or read a single line of code and don't intend to for this project lol. Everything you see was done by Codex.
 
-## Install
+If it works, fantastic. If something breaks, open an issue. Just remember that AI-generated code isn't magically immune lmao.
 
-1. Close the game and start NVDA.
-2. Extract `rlease/LT_Access_0.2.0.zip`.
-3. Run `Install.cmd` inside the extracted folder. Python 3.10 or newer is required for installation/removal.
+## Features
+
+### Dialogue and voice acting
+
+Lust Access is designed to work alongside the game's existing voice acting rather than talk over it.
+
+- **Voiced dialogue:** NVDA automatically avoids reading dialogue when a playable voice-acting clip is available.
+- **Unvoiced dialogue:** Spoken through NVDA.
+- **Descriptions and narration:** Read aloud when no corresponding voice clip is available.
+- **Missing or muted voice clips:** Fall back to NVDA speech.
+- **Menus and controls:** Spoken with keyboard navigation.
+
+### Accessible navigation
+
+The mod provides a keyboard-driven interface for navigating supported game menus, making selections, reviewing screen text, and handling timed events.
+
+Timed choices are paused by default so you don't have to race against a timer while listening to NVDA.
+
+## Installation
+
+### Automatic installation (recommended)
+
+1. Close Lust Theory if it's running.
+2. Download and extract [LT_Access_0.2.0.zip](https://github.com/Inanis7787/Lust-access/raw/refs/heads/main/release/LT_Access_0.2.0.zip) from the `release/` folder.
+3. Run `Install.cmd` from the extracted folder.
 4. Launch the game normally.
 
-Default game location: `C:\GOG Games\Lust Theory - Season 1`.
+**Requirement:** Python 3.10 or newer must be installed to run the installer or uninstaller.
 
-For another location:
+The default game directory is:
+
+`C:\GOG Games\Lust Theory - Season 1`
+
+### Installing to a different directory
+
+If your game is installed somewhere else, run:
 
 ```powershell
 py -3 install_access.py --game "C:\path\to\Lust Theory - Season 1"
 ```
 
-The game folder must already contain a compatible `nvdaControllerClient64.dll`. This project does not redistribute that library. The mod stays silent if it cannot connect to NVDA.
+### NVDA requirements
 
-To remove, close the game and run `Uninstall.cmd`. The installer preserves the original archives and checks its file hashes before removal. Uninstall an older version before installing a new release. A locally updated existing installation does not need reinstalling.
+The game directory must already contain a compatible `nvdaControllerClient64.dll`.
 
-## NVDA and speech
+This project does not redistribute that DLL.
 
-No visible mod buttons, action panels, help text, or self-voicing banner are drawn. NVDA automatically skips dialogue with an available, unmuted voice-acting clip, even after that clip finishes. Unvoiced dialogue, descriptions, and menu controls remain spoken. Missing or muted clips fall back to NVDA.
+If the mod cannot establish a connection to NVDA, it will remain silent rather than interfere with the game.
 
-If NVDA intercepts game keys, switch it to focus mode where supported.
+### Uninstallation
+
+1. Close the game.
+2. Run `Uninstall.cmd`.
+3. Follow the prompts.
+
+The installer preserves the original game archives and verifies file hashes before removing the mod.
+
+**Important:** Uninstall an older release before installing a newer one. Existing local installations updated in place do not require a fresh installation.
+
+## Keyboard controls
 
 | Key | Action |
-| --- | --- |
-| F1 | Speak keyboard help |
-| F2 | Read current screen text |
-| F3 | Read connection/game status |
+|---|---|
+| F1 | Read keyboard help |
+| F2 | Read the current screen text |
+| F3 | Announce NVDA connection and game status |
 | F4 | Open or close the spoken control list |
-| Up/Down or Tab/Shift+Tab | Move through controls |
-| Left/Right in the F4 list | Move between content, navigation, and Back groups |
-| Home/End | First/last control |
-| Page Up/Page Down | Move ten controls |
-| Enter | Activate the current control |
+| Up / Down | Move between controls |
+| Tab / Shift+Tab | Move forward or backward through controls |
+| Left / Right (F4 list) | Switch between content, navigation, and Back groups |
+| Home / End | Jump to the first or last control |
+| Page Up / Page Down | Move ten controls at a time |
+| Enter | Activate the selected control |
 | Escape | Close the list/editor or open the game menu |
-| F5 | Stop speech |
-| F6 | Pause/resume timed choices |
-| F7 | Repeat speech |
-| F8 | Take the active timer's timeout branch; this can be a failure |
+| F5 | Stop NVDA speech |
+| F6 | Pause or resume timed choices |
+| F7 | Repeat the last speech |
+| F8 | Immediately trigger the active timer's timeout branch |
 | Space | Advance dialogue |
 | V | Toggle speech |
+| Ctrl (hold) | Skip dialogue |
 
-Timed choices start paused. Use F4 to react, or F8 to let the timer expire. Hold Ctrl to skip dialogue; Tab is reserved for focus navigation.
+### Timed choices
 
-## Relationship Changer
+Timed choices begin paused automatically.
 
-From the in-game Settings menu, choose Change Relationships. Press F4, choose a field, and press Enter. Each field announces its label and current value.
+Open the control list using `F4` to review your options and make a selection without rushing.
 
-- Type to edit; **Ctrl+A clears the field**.
-- Enter saves through the game's original callback.
-- Escape discards the draft.
-- Empty values and values longer than ten characters are rejected.
+Press `F6` to pause or resume the timer manually.
 
-The editor is invisible and communicates through NVDA. The seven fields cover the player name and the game's existing relationship labels; it does not add new story settings.
+Press `F8` to take the timeout branch immediately.
 
-## Other menus
+**Warning:** The timeout branch isn't necessarily the correct option. Depending on the scene, it can result in failure.
 
-The spoken list includes labelled settings sliders, numbered save/load slots, explicit save-page names, and context for repeated links. Empty/disabled controls are announced as unavailable. Content comes first, then navigation, then Back.
+### A note about Tab
 
-Choose a slider from F4 to edit it. Arrow keys change its draft value by five percent; Home/End select the minimum/maximum. Enter applies it; Escape cancels. Use the game's original save/load confirmation prompts normally.
+The Tab key is reserved for accessible focus navigation. Hold Ctrl to skip dialogue instead.
 
-## Build and test
+## Known limitations
 
-Run source tests:
+This is an accessibility mod, not a complete remake of the game's interface.
+
+Current limitations include:
+
+- Image-only phone messages are not transcribed.
+- Visual scenes are not described.
+- Some information conveyed exclusively through images may remain inaccessible.
+- Game updates may break compatibility.
+- Other UI mods may conflict with the accessibility overrides.
+- NVDA connectivity depends on the compatible controller DLL being available.
+
+The mod was developed and tested against the specified Ren'Py version. Compatibility with other versions is not guaranteed.
+
+See [MENU_AUDIT.md](MENU_AUDIT.md) for the menu testing and validation scope.
+
+## Building from source
+
+For anyone who wants to tinker, the source is available.
+
+### Run the tests
 
 ```powershell
 py -3 -m unittest discover -s src/tests -v
 ```
 
-Build the compiled release using your installed game runtime:
+### Build a release
+
+The release builder uses the installed game's Ren'Py runtime.
 
 ```powershell
 py -3 src/build_release.py --game-root "C:\GOG Games\Lust Theory - Season 1"
 ```
 
-The build compiles only the two mod scripts in an isolated temporary directory, then produces the bundle in `rlease/`. The installer can also run directly from `src/` for a source installation.
+The build process compiles only the two mod scripts in an isolated temporary directory and generates a distributable release bundle and ZIP in `release/`.
 
-See [MENU_AUDIT.md](MENU_AUDIT.md) for the menu sweep and validation scope. Image-only phone messages are not transcribed, and the project does not provide visual scene descriptions. Game updates and other UI mods may conflict with these overrides.
+The installer can also be run directly from `src/` for a source installation.
 
-## Research and license
+## Research and acknowledgments
 
-Implementation was informed by [Ren'Py self-voicing documentation](https://www.renpy.org/doc/html/self_voicing.html), the [Vigil accessibility mod](https://github.com/EarthboundPromoter/Vigil), and the [Ren'Py Accessibility Add-On](https://minute.itch.io/renpy-accessibility). Engine compatibility was checked against the installed 8.1.3 source.
+Implementation was informed by the following projects and documentation:
 
-The mod's original code is MIT licensed. Game content and third-party libraries retain their original licenses.
+- [Ren'Py Self-Voicing Documentation](https://www.renpy.org/doc/html/self_voicing.html)
+- [Ren'Py Accessibility Add-On](https://minute.itch.io/renpy-accessibility)
+
+Engine compatibility was checked against the installed Ren'Py 8.1.3 source.
+
+## Issues and contributions
+
+If you encounter broken menus, missing speech, navigation problems, or anything else that makes the game difficult to play with NVDA, please open a GitHub issue.
+
+When reporting a problem, include the game version, what you were attempting to do, what happened, and what you expected to happen.
+
+Pull requests and accessibility improvements are welcome.
+
+## License
+
+Lust Access is released under the **MIT License**.
+
+Game content and third-party libraries remain the property of their respective owners and retain their original licenses.
+
+This project is an unofficial accessibility modification and is not affiliated with the developers or publishers of *Lust Theory*.
+
+---
+
+*Made because I wanted to play the damn game, not because I wanted to become a Ren'Py developer.*
+
+*Code by Codex. Accessibility first. Bullshit kept to a minimum.*
