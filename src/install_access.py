@@ -14,7 +14,7 @@ import re
 import tokenize
 import zlib
 
-VERSION = "0.2.1"
+VERSION = "0.2.2"
 HERE = pathlib.Path(__file__).resolve().parent
 DEFAULT_GAME = pathlib.Path(r"C:\GOG Games\Lust Theory - Season 1")
 

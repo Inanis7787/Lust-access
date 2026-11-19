@@ -21,13 +21,15 @@ If it works, fantastic. If something breaks, open an issue. Just remember that A
 
 Lust Access is designed to work alongside the game's existing voice acting rather than talk over it.
 
-- **Voiced dialogue:** NVDA automatically avoids reading dialogue when a playable voice-acting clip is available.
-- **Unvoiced dialogue:** Spoken through NVDA.
+- **Voiced dialogue:** Stays silent on arrival when an available, unmuted voice-acting clip exists. Press Up or Down to read the current line with NVDA on demand.
+- **Unvoiced dialogue:** Spoken automatically through NVDA; Up or Down can read it again on demand.
 - **Descriptions and narration:** Read aloud when no corresponding voice clip is available.
 - **Missing or muted voice clips:** Fall back to NVDA speech.
 - **Menus and controls:** Spoken with keyboard navigation.
 
 ### Accessible navigation
+
+During story dialogue, either Up or Down reads the current line (and speaker, when present). This works for both voiced and unvoiced lines. It does not advance the story or automatically narrate newly arriving voiced lines. Menu, choice, and text-entry navigation retain their native arrow-key behavior.
 
 Menus use the game's native focus navigation with self-voicing enabled. Options are spoken without added menu or section prefixes: for example, "Start". For sliders, focus the control, press Enter, adjust with Left/Right, then press Enter again to finish.
 
@@ -40,7 +42,7 @@ Timed choices are paused by default so you don't have to race against a timer wh
 ### Automatic installation (recommended)
 
 1. Close Lust Theory if it's running.
-2. Download and extract [LT_Access_0.2.1.zip](https://github.com/Inanis7787/Lust-access/raw/refs/heads/main/release/LT_Access_0.2.1.zip) from the `release/` folder.
+2. Download and extract [LT_Access_0.2.2.zip](https://github.com/Inanis7787/Lust-access/raw/refs/heads/main/release/LT_Access_0.2.2.zip) from the `release/` folder.
 3. Run `Install.cmd` from the extracted folder.
 4. Launch the game normally.
 
@@ -83,7 +85,7 @@ The installer preserves the original game archives and verifies file hashes befo
 | F1 | Read keyboard help |
 | F2 | Read the current screen text |
 | F3 | Announce NVDA connection and game status |
-| Up / Down | Move between controls |
+| Up / Down | Read the current story line on demand; navigate controls in menus |
 | Tab / Shift+Tab | Move forward or backward through controls |
 | Enter | Activate the selected control; press again to finish adjusting a slider |
 | Escape | Close the editor or open the game menu |

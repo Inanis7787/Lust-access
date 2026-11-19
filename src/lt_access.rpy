@@ -1,4 +1,4 @@
-# LT Access 0.2.1. Original accessibility code; no game assets included.
+# LT Access 0.2.2. Original accessibility code; no game assets included.
 default persistent.lt_access_pause_timers = True
 
 init 990 python:
@@ -49,6 +49,46 @@ init 990 python:
         except Exception:
             # Missing/invalid voice metadata must not silence unvoiced text.
             return False
+
+    def lta_can_review_story():
+        # Reserve arrows only for an active ADV story line, never menu/input focus.
+        try:
+            if renpy.get_mode() != "say" or renpy.get_screen("say") is None:
+                return False
+            context = renpy.context()
+            if getattr(context, "_menu", False) or getattr(context, "_main_menu", False):
+                return False
+            for name in ("choice", "input", "confirm", "lta_edit"):
+                if renpy.get_screen(name) is not None:
+                    return False
+            for entry in renpy.game.context().scene_lists.layers.get("screens", []):
+                displayable = entry.displayable
+                name = getattr(displayable, "screen_name", ("",))[0]
+                if name in ("say", "lta_keys", "_self_voicing"):
+                    continue
+                if getattr(displayable, "modal", False) or getattr(displayable, "tag", None) == "menu":
+                    return False
+            return True
+        except Exception:
+            return False
+
+    def lta_current_story_text():
+        # Read the rendered child text directly, bypassing the automatic voice
+        # filter on its parent window. This is called only on an explicit key.
+        what = renpy.get_displayable("say", "what")
+        if what is None:
+            return ""
+        body = what._tts_all().strip()
+        who = renpy.get_displayable("say", "who")
+        speaker = who._tts_all().strip() if who is not None else ""
+        return (speaker + ": " + body) if speaker and body else body
+
+    def lta_review_story():
+        if not lta_can_review_story():
+            return
+        text = lta_current_story_text()
+        if text:
+            lta_speak(text)
 
     def lta_speak(text):
         global _lta_last, _lta_speech_ok, _lta_speech_error
@@ -124,6 +164,9 @@ init 990 python:
 screen lta_keys():
     zorder 100002
     timer 0.15 repeat True action Function(lta_flush_menu_speech)
+    if lta_can_review_story():
+        key "K_UP" action Function(lta_review_story, _update_screens=False)
+        key "K_DOWN" action Function(lta_review_story, _update_screens=False)
     key "K_F1" action Function(lta_help_speech)
     key "K_F2" action Function(lta_read)
     key "K_F3" action Function(lta_status)

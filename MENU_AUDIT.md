@@ -1,3 +1,13 @@
+# On-demand story review — 0.2.2
+
+During ADV story dialogue, Up or Down reads the current rendered line and speaker with NVDA. This applies to voiced and unvoiced lines. The command does not advance the story or turn on automatic reading for later voiced lines.
+
+Automatic behavior is unchanged: unvoiced dialogue/descriptions are narrated on arrival; available, unmuted voice-acted lines are excluded from automatic narration. Missing or muted clips still fall back to automatic NVDA output.
+
+All 23 source tests pass. The compiled 0.2.2 bundle passed 19 engine assertions using self-authored dialogue and a short test voice clip in an isolated game/save directory. These verify automatic unvoiced narration, explicit Up/Down reading of both line types, suppression after the clip ends, no automatic narration of a subsequent voiced line, narrator descriptions, and native menu/confirmation key behavior. Tests inspect the speech requests rather than physical keyboard input or synthesized audio.
+
+The previous audits below document retained behavior and earlier validation.
+
 # Native menu navigation — 0.2.1
 
 The custom action list has been removed. Native arrow/Tab navigation and self-voicing remain enabled. Menu option labels no longer prepend group or section names. Relationship editing, native slider labels, save-slot labels, voice filtering, and paused timers are retained.

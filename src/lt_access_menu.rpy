@@ -73,7 +73,7 @@ init 991 python:
         lta_queue_menu_speech("Cancelled. No changes saved.")
 
     def lta_help_speech():
-        lta_speak("Use the game's native menu navigation. Arrow keys or Tab and Shift Tab move between controls. "
+        lta_speak("During story dialogue, Up or Down reads the current line, including voice-acted lines. Unvoiced story lines are still read automatically. In menus, arrow keys or Tab and Shift Tab move between controls. "
                   "Enter activates a button or slider. On a slider, use Left and Right, then press Enter again to finish. "
                   "Relationship fields announce their current value; Enter opens the editor. "
                   "Type to edit, Control A clears the field, Enter saves, and Escape cancels. "
