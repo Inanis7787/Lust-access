@@ -1,4 +1,12 @@
-# Menu audit — 0.2.0
+# Native menu navigation — 0.2.1
+
+The custom action list has been removed. Native arrow/Tab navigation and self-voicing remain enabled. Menu option labels no longer prepend group or section names. Relationship editing, native slider labels, save-slot labels, voice filtering, and paused timers are retained.
+
+Validation: all 17 source tests and 39 compiled-runtime native-navigation assertions passed. The runtime checks cover plain option labels, native Tab focus, keyboard activation and saving of all seven relationship fields, native slider activation/adjustment, and native controls across the settings, save/load, help, about, voice-actress, history, and language screens.
+
+The audit below records the earlier 0.2.0 implementation; its custom-list/group assertions do not describe the current interface.
+
+# Historical menu audit — 0.2.0
 
 ## Source sweep
 

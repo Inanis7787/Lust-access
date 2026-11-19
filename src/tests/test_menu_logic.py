@@ -57,21 +57,17 @@ class MenuLogicTests(unittest.TestCase):
         self.assertEqual(self.callbacks,[])
         self.assertEqual(self.saved,[])
 
-    def test_group_navigation_wraps_and_stays_in_range(self):
-        items=[('One',None,'Settings'),('Two',None,'Settings'),('Three',None,'Navigation'),('Back',None,'Back')]
-        move=self.env['lta_group_position']
-        self.assertEqual(move(items,0,1),2)
-        self.assertEqual(move(items,0,-1),3)
-        self.assertEqual(move([('One',None,'Settings')],0,1),0)
-        self.assertEqual(move([],0,1),0)
-
-    def test_announcements_include_group_position_and_current_value(self):
-        self.env['lta_announce_action']([('Music Volume: 50 percent',None,'Settings')],0)
-        self.assertEqual(self.speech[-1],'Settings. 1 of 1. Music Volume: 50 percent')
+    def test_native_navigation_has_no_action_list_binding(self):
+        for name in ('lt_access.rpy','lt_access_menu.rpy'):
+            code=(SOURCE/name).read_text(encoding='utf-8')
+            self.assertNotIn('K_F4',code)
+            self.assertNotIn('lta_actions',code)
+        self.assertNotIn('F4',(SOURCE.parent/'README.md').read_text(encoding='utf-8'))
 
     def test_styling_markup_is_removed_from_context_labels(self):
         label=self.env['lta_ui_label']('{b}Music{/b}','{size=40}Test{/size}')
-        self.assertEqual(label,'Music: Test')
+        self.assertEqual(label,'Test')
+        self.assertEqual(self.env['lta_ui_label']('Navigation','Start'),'Start')
 
 
 if __name__=='__main__':unittest.main()

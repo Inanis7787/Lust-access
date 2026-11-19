@@ -1,4 +1,4 @@
-# LT Access 0.2.0. Original accessibility code; no game assets included.
+# LT Access 0.2.1. Original accessibility code; no game assets included.
 default persistent.lt_access_pause_timers = True
 
 init 990 python:
@@ -80,9 +80,9 @@ init 990 python:
     def lta_read():
         try:
             text = renpy.display.tts.root._tts_all()
-            lta_speak(text or "No readable text. Press F4 for available actions.")
+            lta_speak(text or "No readable text. Use the arrow keys or Tab to focus a control.")
         except Exception:
-            lta_speak("Press F4 for available actions.")
+            lta_speak("Use the arrow keys or Tab to focus a control.")
 
     def lta_status():
         parts = ["NVDA connected" if lta_nvda_running() else "NVDA unavailable"]
@@ -93,7 +93,7 @@ init 990 python:
                 parts.append(name.replace("_", " ") + ": " + str(value))
         for name in ("countdown", "countdownhid"):
             if renpy.get_screen(name):
-                parts.append("Timed interaction available. F8 lets its timer expire; choose an action with F4.")
+                parts.append("Timed interaction available. F8 lets its timer expire; use the arrow keys or Tab and Enter to choose an action.")
         lta_speak(". ".join(parts))
 
     def lta_toggle_timers():
@@ -108,66 +108,9 @@ init 990 python:
             if screen:
                 target = screen.scope.get("timer_jump")
                 if target and renpy.has_label(target):
-                    renpy.hide_screen("lta_actions")
                     renpy.hide_screen(name)
                     renpy.jump(target)
         lta_speak("No timed interaction is active.")
-
-    def lta_available_actions():
-        # Use only the currently rendered screens, respecting modal boundaries.
-        # Do not jump to labels or expose story actions which are not available.
-        entries = list(renpy.game.context().scene_lists.layers.get("screens", []))
-        found = []
-        seen = set()
-        for entry in reversed(entries):
-            screen = entry.displayable
-            name = getattr(screen, "screen_name", ("",))[0]
-            if name.startswith("lta_"):
-                continue
-            buttons = []
-            screen.visit_all(lambda d: buttons.append(d) if isinstance(d, renpy.display.behavior.Button) else None)
-            for button in buttons:
-                action = button.action if button.action is not None else button.clicked
-                if action is None or not button.is_sensitive():
-                    continue
-                try:
-                    text = button._tts_all().strip()
-                except Exception:
-                    text = ""
-                if not text:
-                    text = name.replace("_", " ") + " action"
-                # Preserve separate actions with identical labels.
-                signature = (id(button), text)
-                if signature in seen:
-                    continue
-                seen.add(signature)
-                found.append((text, action))
-            if getattr(screen, "modal", False):
-                break
-        return found
-
-    def lta_open_actions():
-        if renpy.get_screen("lta_actions"):
-            renpy.hide_screen("lta_actions")
-        else:
-            items = lta_available_actions()
-            renpy.show_screen("lta_actions", items=items)
-        renpy.restart_interaction()
-
-    def lta_announce_action(items, position):
-        if items:
-            lta_speak("%d of %d. %s" % (position + 1, len(items), items[position][0]))
-        else:
-            lta_speak("No actions available. Press Escape, then Space to advance dialogue.")
-
-    def lta_help_speech():
-        lta_speak("Accessibility help. Arrow keys or Tab move between game controls. Enter activates. "
-                  "Space advances dialogue. F2 reads the screen. F3 reads status. "
-                  "F4 opens or closes the spoken action list. In that list use Up and Down, "
-                  "Home and End, or Page Up and Page Down, then Enter to choose. Escape closes it. "
-                  "F5 stops speech. F6 pauses or resumes timers. F7 repeats speech. "
-                  "F8 takes the current timer's timeout branch, which may be a failure. "
-                  "Timers start paused. V toggles speech.")
 
     config.tts_function = lta_speak
     config.tts_voice_channels = []
@@ -184,30 +127,10 @@ screen lta_keys():
     key "K_F1" action Function(lta_help_speech)
     key "K_F2" action Function(lta_read)
     key "K_F3" action Function(lta_status)
-    key "K_F4" action Function(lta_open_actions)
     key "K_F5" action Function(lta_silence)
     key "K_F6" action Function(lta_toggle_timers)
     key "K_F7" action Function(lta_repeat)
     key "K_F8" action Function(lta_expire_timer)
-
-screen lta_actions(items):
-    zorder 100001
-    modal True
-    default position = 0
-    key "K_ESCAPE" action Hide("lta_actions")
-    key "K_F4" action Hide("lta_actions")
-    timer 0.1 action Function(lta_announce_action, items, position)
-    if items:
-        key "K_DOWN" action [SetScreenVariable("position", (position+1)%len(items)), Function(lta_announce_action, items, (position+1)%len(items))]
-        key "K_TAB" action [SetScreenVariable("position", (position+1)%len(items)), Function(lta_announce_action, items, (position+1)%len(items))]
-        key "K_UP" action [SetScreenVariable("position", (position-1)%len(items)), Function(lta_announce_action, items, (position-1)%len(items))]
-        key "shift_K_TAB" action [SetScreenVariable("position", (position-1)%len(items)), Function(lta_announce_action, items, (position-1)%len(items))]
-        key "K_HOME" action [SetScreenVariable("position", 0), Function(lta_announce_action, items, 0)]
-        key "K_END" action [SetScreenVariable("position", len(items)-1), Function(lta_announce_action, items, len(items)-1)]
-        key "K_PAGEDOWN" action [SetScreenVariable("position", min(position+10,len(items)-1)), Function(lta_announce_action, items, min(position+10,len(items)-1))]
-        key "K_PAGEUP" action [SetScreenVariable("position", max(position-10,0)), Function(lta_announce_action, items, max(position-10,0))]
-        key "K_RETURN" action [Hide("lta_actions"), items[position][1]]
-        key "K_KP_ENTER" action [Hide("lta_actions"), items[position][1]]
 
 # Suppress the engine's visual self-voicing notification as well.
 init offset = 10

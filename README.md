@@ -29,6 +29,8 @@ Lust Access is designed to work alongside the game's existing voice acting rathe
 
 ### Accessible navigation
 
+Menus use the game's native focus navigation with self-voicing enabled. Options are spoken without added menu or section prefixes: for example, "Start". For sliders, focus the control, press Enter, adjust with Left/Right, then press Enter again to finish.
+
 The mod provides a keyboard-driven interface for navigating supported game menus, making selections, reviewing screen text, and handling timed events.
 
 Timed choices are paused by default so you don't have to race against a timer while listening to NVDA.
@@ -38,7 +40,7 @@ Timed choices are paused by default so you don't have to race against a timer wh
 ### Automatic installation (recommended)
 
 1. Close Lust Theory if it's running.
-2. Download and extract [LT_Access_0.2.0.zip](https://github.com/Inanis7787/Lust-access/raw/refs/heads/main/release/LT_Access_0.2.0.zip) from the `release/` folder.
+2. Download and extract [LT_Access_0.2.1.zip](https://github.com/Inanis7787/Lust-access/raw/refs/heads/main/release/LT_Access_0.2.1.zip) from the `release/` folder.
 3. Run `Install.cmd` from the extracted folder.
 4. Launch the game normally.
 
@@ -81,14 +83,10 @@ The installer preserves the original game archives and verifies file hashes befo
 | F1 | Read keyboard help |
 | F2 | Read the current screen text |
 | F3 | Announce NVDA connection and game status |
-| F4 | Open or close the spoken control list |
 | Up / Down | Move between controls |
 | Tab / Shift+Tab | Move forward or backward through controls |
-| Left / Right (F4 list) | Switch between content, navigation, and Back groups |
-| Home / End | Jump to the first or last control |
-| Page Up / Page Down | Move ten controls at a time |
-| Enter | Activate the selected control |
-| Escape | Close the list/editor or open the game menu |
+| Enter | Activate the selected control; press again to finish adjusting a slider |
+| Escape | Close the editor or open the game menu |
 | F5 | Stop NVDA speech |
 | F6 | Pause or resume timed choices |
 | F7 | Repeat the last speech |
@@ -101,7 +99,7 @@ The installer preserves the original game archives and verifies file hashes befo
 
 Timed choices begin paused automatically.
 
-Open the control list using `F4` to review your options and make a selection without rushing.
+Use the arrow keys or Tab to review the available controls, then press Enter to choose.
 
 Press `F6` to pause or resume the timer manually.
 

@@ -14,7 +14,7 @@ import re
 import tokenize
 import zlib
 
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 HERE = pathlib.Path(__file__).resolve().parent
 DEFAULT_GAME = pathlib.Path(r"C:\GOG Games\Lust Theory - Season 1")
 
@@ -157,11 +157,7 @@ def patch_source(source, tooltips):
             caption = ast.literal_eval(quoted)
             section = section_labels[-1][1] if section_labels else "''"
             expression = 'lta_ui_label(_(%s), _(%s))' % (section, quoted)
-            if screen == 'navigation':
-                expression = 'lta_ui_label("Navigation", _(%s))' % quoted
-            elif caption == 'Return':
-                expression = repr('Return to previous menu or game')
-            elif screen == 'file_slots':
+            if screen == 'file_slots':
                 expression = {'<':repr('Previous save page'), '>':repr('Next save page'),
                               '{#auto_page}A':repr('Automatic saves'), '{#quick_page}Q':repr('Quick saves'),
                               '[page]':'("Save page %s" % page)'}.get(caption, expression)

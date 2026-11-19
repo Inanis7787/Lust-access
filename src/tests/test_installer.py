@@ -91,6 +91,11 @@ class InstallerTests(unittest.TestCase):
         self.assertIn('bar value Preference("music volume") alt _("Music Volume")',patched)
         self.assertIn('lta_ui_label(_("Music Volume"), _("Test"))',patched)
 
+    def test_navigation_does_not_add_group_prefix(self):
+        patched,_,_=m.patch_source('screen navigation():\n    textbutton _("Start") action Start()\n',{})
+        self.assertNotIn('"Navigation"',patched)
+        self.assertNotIn('Navigation:',patched)
+
     def test_unvoiced_dialogue_filter_remains_in_say_window(self):
         patched,_,_=m.patch_source('screen say(who, what):\n    window:\n        text what\n',{})
         self.assertIn('alt ("" if lta_dialogue_is_voiced() else None)',patched)
