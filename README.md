@@ -176,9 +176,3 @@ Lust Access is released under the **MIT License**.
 Game content and third-party libraries remain the property of their respective owners and retain their original licenses.
 
 This project is an unofficial accessibility modification and is not affiliated with the developers or publishers of *Lust Theory*.
-
----
-
-*Made because I wanted to play the damn game, not because I wanted to become a Ren'Py developer.*
-
-*Code by Codex. Accessibility first. Bullshit kept to a minimum.*
